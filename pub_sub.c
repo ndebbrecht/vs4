@@ -1,11 +1,16 @@
 
-#include "pub_sub.h"
 #include <stdio.h>
 #include <rpc/rpc.h>
+#include "pub_sub.h"
 
-CLIENT[512] subscribed;
+CLIENT subscribed[512];
 unsigned short subCounter = 0;
 topic *channel;
+
+int main(int argc, char const *argv[]) {
+
+  return 0;
+}
 
 short *unsubscribe_1_svc(topic *tp, svc_req *req){
   for(unsigned short i = 0; i <= subCounter; i++){
