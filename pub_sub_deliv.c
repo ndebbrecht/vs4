@@ -1,6 +1,9 @@
+
+#include <stdio.h>
+#include <rpc/rpc.h>
 #include "pub_sub_deliv.h"
 
-int main(int argc, char const *argv[]) {
-  /* code */
-  return 0;
-}
+
+ short *deliver_1_svc(postmessage *message, struct svc_req *req){
+   printf("%s\n", message);
+ }
