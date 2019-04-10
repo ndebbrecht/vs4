@@ -9,10 +9,10 @@ unsigned short subCounter = 0;
 topic *channel;
 struct scv_req;
 
-int main(int argc, char const *argv[]) {
+/*int main(int argc, char const *argv[]) {
 
   return 0;
-}
+}*/
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   for(unsigned short i = 0; i <= subCounter; i++){
