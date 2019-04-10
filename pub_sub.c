@@ -1,6 +1,9 @@
 
 #include <stdio.h>
 #include <rpc/rpc.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "pub_sub.h"
 #include "pub_sub_deliv.h"
 
@@ -16,8 +19,7 @@ struct scv_req;
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   for(unsigned short i = 0; i <= subCounter; i++){
-    char *address;
-    sprintf(address, "%i",req->rq_xprt->xp_raddr.sin_addr.s_addr);
+    char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
     if(strcmp(subscribed[i], address)){
       subscribed[i] = subscribed[subCounter];
       subCounter--;
@@ -27,8 +29,7 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
-  char *address;
-  sprintf(address, "%i",req->rq_xprt->xp_raddr.sin_addr.s_addr);
+  char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
   subscribed[subCounter] = address;
   subCounter++;
   return 0;
