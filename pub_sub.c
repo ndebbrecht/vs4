@@ -42,7 +42,7 @@ short *set_channel_1_svc(topic *tp, struct svc_req *req){
 short *publish_1_svc(message *message, struct svc_req *req){
   for(unsigned short i = 0; i <= subCounter; i++){
     CLIENT *cl;
-    cl = clnt_create(subscribed[i], PUBSUBPROG, PUBSUBVERS, "tcp");
+    cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     postmessage *m = message;
     deliver_1(m, cl);
   }
