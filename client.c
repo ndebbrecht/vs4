@@ -19,15 +19,14 @@ int main(int argc, char *argv[]){
 		exit(1);
 	}
 
-	set_channel_1((topic *)topic, cl);
-	printf("topic set to %s", topic);
+	set_channel_1(&topic, cl);
+	printf("topic set to %s\n", topic);
 	subscribe_1(NULL, cl);
 
-	printf("Eingabe: ");
+	printf("Eingabe: \n");
 	char *msg;
 	scanf("%s\n",msg);
-	message msg2 = msg;
-	publish_1(*msg2, cl);
+	publish_1(&msg, cl);
 
 	unsubscribe_1(NULL, cl);
 }
