@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
 	subscribe_1(NULL, cl);
 
 	printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
-	char msg[MESLEN];
+	char *msg;
 	if(fgets(msg, MESLEN, stdin)){
 		publish_1(&msg, cl);
 	}
