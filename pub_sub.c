@@ -17,7 +17,7 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
   char *address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
   for(unsigned short i = 0; i < subCounter; i++){
     if(0 == strcmp(subscribed[i], address)){
-      strcpy(subscribed[i] = subscribed[subCounter-1]);
+      strcpy(subscribed[i], subscribed[subCounter-1]);
       subCounter--;
       printf("Subscriber-List:\n");
       for(unsigned short i = 0; i < subCounter; i++){
@@ -44,7 +44,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
 
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
   *channel = *tp;
-  printf("Channel: %s\n", channel);
+  printf("Channel: %s\n", *channel);
   return 0;
 }
 
