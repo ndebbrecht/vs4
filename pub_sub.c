@@ -41,7 +41,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
 }
 
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
-  strcpy(*channel, *tp);
+  strcpy(channel, tp);
   printf("Channel: %s\n", *channel);
   return 0;
 }
