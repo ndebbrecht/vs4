@@ -32,8 +32,8 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
   char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-  char tmp[16] = address;s
-  strcpy(subscribed[subCounter], address);
+  char tmp[16] = address;
+  strcpy(subscribed[subCounter], tmp);
   subCounter++;
   printf("Subscriber-List:\n");
   for(unsigned short i = 0; i < subCounter; i++){
