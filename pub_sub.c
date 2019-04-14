@@ -36,7 +36,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
   char address[16];
   strcpy(address, tmp);
   printf("New Subscriber: %s\n", address);
-  strcpy(subscribed[subCounter], address);
+  subscribed[subCounter] = address;
   subCounter++;
   printf("Subscriber-List:\n");
   for(unsigned short i = 0; i < subCounter; i++){
