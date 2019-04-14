@@ -50,9 +50,8 @@ short *publish_1_svc(message *message, struct svc_req *req){
   for(unsigned short i = 0; i < subCounter; i++){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
-    postmessage *m = *topic;
-    strcat(*m, ": ");
-    strcat(*m, *message);
+    postmessage *m;
+    sprintf(m, "%s: %s", topic, message);
     printf("send message; %s\n", *message);
     deliver_1(m, cl);
     printf("sent\n");
