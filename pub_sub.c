@@ -58,8 +58,8 @@ short *publish_1_svc(message *message, struct svc_req *req){
     strcat(tmp, *message);
     printf("%s\n", tmp);
     postmessage m = tmp;
-    printf("send message: %s\n", *m);
-    deliver_1(m, cl);
+    printf("send message: %s\n", m);
+    deliver_1(*m, cl);
     printf("sent\n");
   }
   printf("sending completed.\n");
