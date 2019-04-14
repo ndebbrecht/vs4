@@ -2,8 +2,10 @@
 #include <unistd.h>
 #include "pub_sub_deliv.h"
 #include "pub_sub.h"
+#include "return_codes.h"
 
 int main(int argc, char *argv[]){
+  static short * error_no;
 	printf("Client starten\n");
 	if(argc != 3){
 		printf("Missing arguments");
@@ -20,11 +22,14 @@ int main(int argc, char *argv[]){
 		exit(1);
 	}
 
-	set_channel_1(&topic, cl);
+	error_no=set_channel_1(&topic, cl);
+  printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
+  
 	printf("topic set to %s\n", topic);
 	void *ptr = NULL;
 	printf("subscribing...\n");
-	subscribe_1(ptr, cl);
+	error_no=subscribe_1(ptr, cl);
+  printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
 	int pid = fork();
 
 	if(pid == 0){
@@ -37,13 +42,16 @@ int main(int argc, char *argv[]){
 		char msg[MESLEN];
 		if(fgets(msg, MESLEN, stdin)){
 			char *msg2 = msg;
-			publish_1(&msg2, cl);
+      
+			error_no=publish_1(&msg2, cl);
+      printf("%s",PUB_SUB_RET_CODE[*error_no]);
 		}
 
 		void *ptr2 = NULL;
 		printf("unsubscribing...\n");
 		kill(pid, SIGKILL);
-		unsubscribe_1(ptr2, cl);
+		error_no=unsubscribe_1(ptr2, cl);
+    printf("%s",PUB_SUB_RET_CODE[*error_no]);
 		printf("finished\nquitting...\n");
 	}
 }
