@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 	char msg[MESLEN];
 	if(fgets(msg, MESLEN, stdin)){
 		char *msg2 = msg;
-		publish_1(msg2, cl);
+		publish_1(&msg2, cl);
 	}
 
 	unsubscribe_1(NULL, cl);
