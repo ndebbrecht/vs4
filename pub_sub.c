@@ -14,15 +14,15 @@ const topic *channel;
 struct scv_req;
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
-  printf("unsubscribing...\n");
   char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-  printf("%s\n", address);
   for(unsigned short i = 0; i < subCounter; i++){
-    printf("%i. %s <=> %s\n", i, address, subscribed[i]);
     if(0 == strcmp(subscribed[i], address)){
       subscribed[i] = subscribed[subCounter-1];
       subCounter--;
-      printf("unsubscribed %s.\n", address);
+      printf("Subscriber-List:\n");
+      for(unsigned short i = 0; i < subCounter; i++){
+        printf("%s\n", subscribed[i]);
+      }
       return 0;
     }
   }
@@ -30,11 +30,13 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
-  printf("Start subscribing\n");
   char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
   subscribed[subCounter] = address;
   subCounter++;
-  printf("subscribed %s\n", address);
+  printf("Subscriber-List:\n");
+  for(unsigned short i = 0; i < subCounter; i++){
+    printf("%s\n", subscribed[i]);
+  }
   return 0;
 }
 
