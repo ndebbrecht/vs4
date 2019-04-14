@@ -26,7 +26,8 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
       return 0;
     }
   }
-  return &CANNOT_UNREGISTER;
+  int code = CANNOT_UNREGISTER;
+  return &code;
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
