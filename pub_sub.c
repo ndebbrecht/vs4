@@ -16,7 +16,7 @@ char top[TOPLEN];
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   char *tmp = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-  char address[16] = tmp;
+  char address[16] = *tmp;
   for(unsigned short i = 0; i < subCounter; i++){
     if(0 == strcmp(subscribed[i], address)){
       strcpy(subscribed[i], subscribed[subCounter-1]);
@@ -32,7 +32,7 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
   char *tmp = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-  char address[16] = tmp;
+  char address[16] = *tmp;
   printf("New Subscriber: %s\n", address);
   strcpy(subscribed[subCounter], address);
   subCounter++;
