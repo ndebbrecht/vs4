@@ -23,10 +23,11 @@ int main(int argc, char *argv[]){
 	printf("topic set to %s\n", topic);
 	subscribe_1(NULL, cl);
 
-	printf("Eingabe: \n");
-	char *msg;
-	scanf("%s\n",msg);
-	publish_1(&msg, cl);
+	printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
+	char msg[MESLEN];
+	if(fgets(msg, MESLEN, stdin)){
+		publish_1(&msg, cl);
+	}
 
 	unsubscribe_1(NULL, cl);
 }

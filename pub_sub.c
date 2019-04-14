@@ -29,21 +29,28 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
+  printf("Start subscribing\n");
   char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
   subscribed[subCounter] = address;
   subCounter++;
+  printf("subscribed %s\n", address);
   return 0;
 }
 
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
+  printf("Setting channel\n");
   channel = tp;
+  printf("channel set to %s\n", channel);
 }
 
 short *publish_1_svc(message *message, struct svc_req *req){
+  printf("sending message\n");
   for(unsigned short i = 0; i <= subCounter; i++){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     postmessage *m = message;
+    printf("send message; %s\n", message);
     deliver_1(m, cl);
+    printf("sent\n");
   }
 }
