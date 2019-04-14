@@ -19,11 +19,11 @@ int main(int argc, char *argv[]){
 		exit(1);
 	}
 
-	short ch = set_channel_1(&topic, cl);
+	short *ch = set_channel_1(&topic, cl);
 	printf("topic set to %s\ncode: %i", topic, ch);
 	void *ptr = NULL;
 	printf("subscribing...\n");
-	short code = subscribe_1(ptr, cl);
+	short *code = subscribe_1(ptr, cl);
 	printf("subscribed\ncode: %i", code);
 
 	printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
