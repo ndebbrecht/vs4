@@ -15,9 +15,10 @@ struct scv_req;
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   printf("unsubscribing...\n");
+  char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
+  printf("%s\n", address);
   for(unsigned short i = 0; i < subCounter; i++){
-    char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-    printf("%s\n", address);
+    printf("%i. %s <=> %s\n", i, address, subscribed[i]);
     if(strcmp(subscribed[i], address)){
       subscribed[i] = subscribed[subCounter-1];
       subCounter--;
