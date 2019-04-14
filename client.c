@@ -33,5 +33,8 @@ int main(int argc, char *argv[]){
 		publish_1(&msg2, cl);
 	}
 
-	unsubscribe_1(ptr, cl);
+	void *ptr2 = NULL;
+	printf("unsubscribing...\n");
+	unsubscribe_1(ptr2, cl);
+	printf("finished\nquitting...\n");
 }

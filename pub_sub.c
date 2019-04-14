@@ -54,4 +54,5 @@ short *publish_1_svc(message *message, struct svc_req *req){
     printf("sent\n");
   }
   printf("sending completed.\n");
+  return 0;
 }
