@@ -21,7 +21,8 @@ int main(int argc, char *argv[]){
 
 	set_channel_1(&topic, cl);
 	printf("topic set to %s\n", topic);
-	subscribe_1(void *ptr, cl);
+	void *ptr = NULL;
+	subscribe_1(ptr, cl);
 
 	printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
 	char *msg;
