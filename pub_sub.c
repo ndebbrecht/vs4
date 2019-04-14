@@ -26,7 +26,7 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
       return 0;
     }
   }
-  return CANNOT_UNREGISTER;
+  return 3;
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
@@ -57,7 +57,7 @@ short *publish_1_svc(message *message, struct svc_req *req){
     strcat(tmp, ": ");
     strcat(tmp, *message);
     printf("%s\n", tmp);
-    postmessage *m = *tmp;
+    postmessage *m = &tmp;
     printf("send message: %s\n", *m);
     deliver_1(m, cl);
     printf("sent\n");
