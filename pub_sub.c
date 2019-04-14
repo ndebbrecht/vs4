@@ -17,6 +17,7 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
   printf("unsubscribing...\n");
   for(unsigned short i = 0; i < subCounter; i++){
     char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
+    printf("%s\n", address);
     if(strcmp(subscribed[i], address)){
       subscribed[i] = subscribed[subCounter];
       subCounter--;
