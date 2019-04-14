@@ -8,7 +8,7 @@
 #include "pub_sub.h"
 #include "pub_sub_deliv.h"
 
-char subscribed[512][16];
+char *subscribed[512];
 unsigned short subCounter = 0;
 topic *channel;
 struct scv_req;
@@ -16,6 +16,7 @@ struct scv_req;
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   char *address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
   for(unsigned short i = 0; i < subCounter; i++){
+    subscribed[i] = malloc(sizeof(address));
     if(0 == strcmp(subscribed[i], address)){
       strcpy(subscribed[i], subscribed[subCounter-1]);
       subCounter--;
@@ -32,7 +33,8 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
   char *address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-  sprintf(subscribed[subCounter], "%s\n", address);
+  subscribed[i] = malloc(sizeof(address));
+  strcpy(subscribed[i], address);
   subCounter++;
   printf("Subscriber-List:\n");
   for(unsigned short i = 0; i < subCounter; i++){
