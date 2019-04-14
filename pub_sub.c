@@ -10,7 +10,7 @@
 
 char *subscribed[512];
 unsigned short subCounter = 0;
-const topic *channel;
+topic *channel;
 struct scv_req;
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
