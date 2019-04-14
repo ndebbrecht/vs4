@@ -8,7 +8,7 @@
 #include "pub_sub.h"
 #include "pub_sub_deliv.h"
 
-char *subscribed[512];
+char subscribed[512][16];
 unsigned short subCounter = 0;
 topic *channel;
 struct scv_req;
