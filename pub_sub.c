@@ -12,6 +12,7 @@ char *subscribed[512];
 unsigned short subCounter = 0;
 topic channel;
 struct scv_req;
+char top[TOPLEN];
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   char *address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
@@ -42,7 +43,8 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
 
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
   channel = *tp;
-  printf("Channel: %s\n", channel);
+  strcpy(top, channel;
+  printf("Channel: %s\n%s\n", channel, top);
   return 0;
 }
 
@@ -51,8 +53,8 @@ short *publish_1_svc(message *message, struct svc_req *req){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     char tmp[TOPLEN + MESLEN + 2] = "";
-    printf("%s\n", channel);
-    strcat(tmp, channel);
+    printf("%s\n", top);
+    strcat(tmp, top);
     strcat(tmp, ": ");
     strcat(tmp, *message);
     postmessage m = tmp;
