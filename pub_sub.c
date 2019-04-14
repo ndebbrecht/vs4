@@ -49,7 +49,7 @@ short *publish_1_svc(message *message, struct svc_req *req){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     postmessage *m = message;
-    printf("send message; %s\n", &message);
+    printf("send message; %s\n", *message);
     deliver_1(m, cl);
     printf("sent\n");
   }
