@@ -50,7 +50,7 @@ short *publish_1_svc(message *message, struct svc_req *req){
   for(unsigned short i = 0; i < subCounter; i++){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
-    postmessage *m = *message;
+    postmessage *m = message;
     char tmp[TOPLEN + MESLEN + 2] = "";
     strcat(tmp, *channel);
     strcat(tmp, ": ");
