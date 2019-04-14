@@ -35,20 +35,17 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
   subCounter++;
   printf("Subscriber-List:\n");
   for(unsigned short i = 0; i < subCounter; i++){
-    printf("%s\n", subscribed[i]);
+    printf("§i: %s\n",i , subscribed[i]);
   }
   return 0;
 }
 
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
-  printf("Setting channel\n");
   channel = tp;
-  printf("channel set to %s\n", *channel);
   return 0;
 }
 
 short *publish_1_svc(message *message, struct svc_req *req){
-  printf("sending message\n");
   for(unsigned short i = 0; i < subCounter; i++){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
@@ -58,7 +55,7 @@ short *publish_1_svc(message *message, struct svc_req *req){
     strcat(tmp, *message);
     printf("%s\n", tmp);
     postmessage m = tmp;
-    printf("send message: %s\n", m);
+    printf("%s ==> %s\n", m, subscribed[i]);
     deliver_1(&m, cl);
     printf("sent\n");
   }
