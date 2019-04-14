@@ -26,12 +26,12 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
       return 0;
     }
   }
-  return 3;
+  return &CANNOT_UNREGISTER;
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
   char *address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-  strcpy(subscribed[subCounter], address);
+  sprintf(subscribed[subCounter], "%s\n", address);
   subCounter++;
   printf("Subscriber-List:\n");
   for(unsigned short i = 0; i < subCounter; i++){
