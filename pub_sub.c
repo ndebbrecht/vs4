@@ -12,11 +12,6 @@ unsigned short subCounter = 0;
 topic *channel;
 struct scv_req;
 
-/*int main(int argc, char const *argv[]) {
-
-  return 0;
-}*/
-
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   for(unsigned short i = 0; i <= subCounter; i++){
     char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
@@ -41,6 +36,7 @@ short *set_channel_1_svc(topic *tp, struct svc_req *req){
   printf("Setting channel\n");
   channel = tp;
   printf("channel set to %s\n", *channel);
+  return 0;
 }
 
 short *publish_1_svc(message *message, struct svc_req *req){

@@ -15,18 +15,18 @@ int main(int argc, char *argv[]){
 	topic = argv[2];
 	cl = clnt_create(address, PUBSUBPROG, PUBSUBVERS, "tcp");
 	if(cl == NULL){
-		printf("server not found");
+		printf("server not found\n");
 		exit(1);
 	}
 
 	short *ch;
 	ch = set_channel_1(&topic, cl);
-	printf("topic set to %s\ncode: %i", topic, ch);
+	printf("topic set to %s\ncode: %i\n", topic, ch);
 	void *ptr = NULL;
 	printf("subscribing...\n");
 	short *code;
 	code = subscribe_1(ptr, cl);
-	printf("subscribed\ncode: %i", code);
+	printf("subscribed\ncode: %i\n", code);
 
 	printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
 	char *msg;
