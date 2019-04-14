@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include "return_codes.h"
 #include "pub_sub.h"
 #include "pub_sub_deliv.h"
 
@@ -13,14 +14,17 @@ topic *channel;
 struct scv_req;
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
+  printf("unsubscribing...\n");
   for(unsigned short i = 0; i <= subCounter; i++){
     char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
     if(strcmp(subscribed[i], address)){
       subscribed[i] = subscribed[subCounter];
       subCounter--;
+      printf("unsubscribed %s.\n", address);
       return 0;
     }
   }
+  return CANNOT_UNREGISTER;
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
