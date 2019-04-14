@@ -19,7 +19,7 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
   printf("%s\n", address);
   for(unsigned short i = 0; i < subCounter; i++){
     printf("%i. %s <=> %s\n", i, address, subscribed[i]);
-    if(strcmp(subscribed[i], address)){
+    if(0 == strcmp(subscribed[i], address)){
       subscribed[i] = subscribed[subCounter-1];
       subCounter--;
       printf("unsubscribed %s.\n", address);
