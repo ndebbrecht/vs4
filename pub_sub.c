@@ -34,7 +34,7 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
 short *subscribe_1_svc(void *t, struct svc_req *req){
   char *tmp = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
   char address[16];
-  address = tmp;
+  strcpy(address, tmp);
   printf("New Subscriber: %s\n", address);
   strcpy(subscribed[subCounter], address);
   subCounter++;
