@@ -10,7 +10,7 @@
 
 char *subscribed[512];
 unsigned short subCounter = 0;
-topic *channel;
+topic channel;
 struct scv_req;
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
@@ -41,7 +41,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
 }
 
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
-  strcpy(channel, tp);
+  strcpy(channel, *tp);
   printf("Channel: %s\n", *channel);
   return 0;
 }
@@ -52,7 +52,7 @@ short *publish_1_svc(message *message, struct svc_req *req){
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     char tmp[TOPLEN + MESLEN + 2] = "";
     printf("%s\n", *channel);
-    strcat(tmp, *channel);
+    strcat(tmp, channel);
     strcat(tmp, ": ");
     strcat(tmp, *message);
     postmessage m = tmp;
