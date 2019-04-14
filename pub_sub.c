@@ -51,7 +51,7 @@ short *publish_1_svc(message *message, struct svc_req *req){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     postmessage *m;
-    sprintf(*m, "%s: %s", *channel, *message);
+    printf("%s: %s", *channel, *message);
     printf("send message; %s\n", *message);
     deliver_1(m, cl);
     printf("sent\n");
