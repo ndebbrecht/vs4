@@ -8,7 +8,7 @@
 #include "pub_sub.h"
 #include "pub_sub_deliv.h"
 
-char *subscribed[512];
+char subscribed[512][16];
 unsigned short subCounter = 0;
 topic channel;
 struct scv_req;
@@ -36,7 +36,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
   char address[16];
   strcpy(address, tmp);
   printf("New Subscriber: %s\n", address);
-  subscribed[subCounter] = address;
+  strcpy(subscribed[subCounter], address);
   subCounter++;
   printf("Subscriber-List:\n");
   for(unsigned short i = 0; i < subCounter; i++){
