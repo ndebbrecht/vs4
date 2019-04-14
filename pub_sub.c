@@ -35,7 +35,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
   subCounter++;
   printf("Subscriber-List:\n");
   for(unsigned short i = 0; i < subCounter; i++){
-    printf("§i: %s\n",i , subscribed[i]);
+    printf("%i: %s\n",i , subscribed[i]);
   }
   return 0;
 }
