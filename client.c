@@ -33,5 +33,5 @@ int main(int argc, char *argv[]){
 		publish_1(&msg2, cl);
 	}
 
-	unsubscribe_1(NULL, cl);
+	unsubscribe_1(ptr, cl);
 }
