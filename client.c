@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 
 	if(pid == 0){
 		printf("Starting the Receiver...\n");
-		execl("./pub_sub_deliv");
+		execl("./pub_sub_deliv", "./pub_sub_deliv", NULL);
 	} else {
 		printf("subscribed\n");
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
 
 		void *ptr2 = NULL;
 		printf("unsubscribing...\n");
-		kill(pid);
+		kill(pid, SIGKILL);
 		unsubscribe_1(ptr2, cl);
 		printf("finished\nquitting...\n");
 	}
