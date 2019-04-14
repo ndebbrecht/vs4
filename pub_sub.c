@@ -15,7 +15,7 @@ struct scv_req;
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   printf("unsubscribing...\n");
-  for(unsigned short i = 0; i <= subCounter; i++){
+  for(unsigned short i = 0; i < subCounter; i++){
     char* address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
     if(strcmp(subscribed[i], address)){
       subscribed[i] = subscribed[subCounter];
@@ -45,7 +45,7 @@ short *set_channel_1_svc(topic *tp, struct svc_req *req){
 
 short *publish_1_svc(message *message, struct svc_req *req){
   printf("sending message\n");
-  for(unsigned short i = 0; i <= subCounter; i++){
+  for(unsigned short i = 0; i < subCounter; i++){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     postmessage *m = message;
