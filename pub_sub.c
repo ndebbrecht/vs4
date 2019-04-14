@@ -44,7 +44,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
   channel = *tp;
   strcpy(top, channel);
-  printf("Channel: %s\n%s\n", channel, top);
+  printf("Channel: %s\n", top);
   return 0;
 }
 
@@ -53,7 +53,6 @@ short *publish_1_svc(message *message, struct svc_req *req){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     char tmp[TOPLEN + MESLEN + 2] = "";
-    printf("%s\n", top);
     strcat(tmp, top);
     strcat(tmp, ": ");
     strcat(tmp, *message);
