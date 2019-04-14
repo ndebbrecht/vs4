@@ -26,13 +26,11 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
       return 0;
     }
   }
-  short code = CANNOT_UNREGISTER;
-  return code;
 }
 
 short *subscribe_1_svc(void *t, struct svc_req *req){
   char *address = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
-  printf("New Subscriber: %s", address);
+  printf("New Subscriber: %s\n", address);
   subscribed[subCounter] = address;
   subCounter++;
   printf("Subscriber-List:\n");
@@ -53,10 +51,10 @@ short *publish_1_svc(message *message, struct svc_req *req){
     CLIENT *cl;
     cl = clnt_create(subscribed[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
     char tmp[TOPLEN + MESLEN + 2] = "";
+    printf("%s\n", *channel);
     strcat(tmp, *channel);
     strcat(tmp, ": ");
     strcat(tmp, *message);
-    printf("%s\n", tmp);
     postmessage m = tmp;
     printf("%s ==> %s\n", m, subscribed[i]);
     deliver_1(&m, cl);
