@@ -40,7 +40,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
   printf("Setting channel\n");
   channel = tp;
-  printf("channel set to %s\n", channel);
+  printf("channel set to %s\n", *channel);
 }
 
 short *publish_1_svc(message *message, struct svc_req *req){
