@@ -59,7 +59,6 @@ short *publish_1_svc(message *message, struct svc_req *req){
     postmessage m = tmp;
     printf("%s ==> %s\n", m, subscribed[i]);
     deliver_1(&m, cl);
-    printf("sent\n");
   }
   printf("sending completed.\n");
   return 0;
