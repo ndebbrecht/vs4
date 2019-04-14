@@ -27,9 +27,10 @@ int main(int argc, char *argv[]){
 	printf("subscribed\n");
 
 	printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
-	char *msg;
+	char msg[MESLEN];
 	if(fgets(msg, MESLEN, stdin)){
-		publish_1(&msg, cl);
+		char *msg2 = msg;
+		publish_1(msg2, cl);
 	}
 
 	unsubscribe_1(NULL, cl);
