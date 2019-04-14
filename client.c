@@ -24,17 +24,25 @@ int main(int argc, char *argv[]){
 	void *ptr = NULL;
 	printf("subscribing...\n");
 	subscribe_1(ptr, cl);
-	printf("subscribed\n");
+	int pid = fork();
 
-	printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
-	char msg[MESLEN];
-	if(fgets(msg, MESLEN, stdin)){
-		char *msg2 = msg;
-		publish_1(&msg2, cl);
+	if(pid == 0){
+		printf("Starting the Receiver...\n");
+		execl("./pub_sub_deliv");
+	} else {
+		printf("subscribed\n");
+
+		printf("Bitte Nachrichten eingeben und mit Enter senden: \n");
+		char msg[MESLEN];
+		if(fgets(msg, MESLEN, stdin)){
+			char *msg2 = msg;
+			publish_1(&msg2, cl);
+		}
+
+		void *ptr2 = NULL;
+		printf("unsubscribing...\n");
+		kill(pid);
+		unsubscribe_1(ptr2, cl);
+		printf("finished\nquitting...\n");
 	}
-
-	void *ptr2 = NULL;
-	printf("unsubscribing...\n");
-	unsubscribe_1(ptr2, cl);
-	printf("finished\nquitting...\n");
 }
