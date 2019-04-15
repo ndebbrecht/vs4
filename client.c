@@ -6,6 +6,7 @@
 
 int main(int argc, char *argv[]){
   static short * error_no;
+	
 	printf("Client starten\n");
 	if(argc != 3){
 		printf("Missing arguments");
@@ -23,13 +24,14 @@ int main(int argc, char *argv[]){
 	}
 
 	error_no=set_channel_1(&topic, cl);
-  printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
-  
-	printf("topic set to %s\n", topic);
+  	printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
+  	if(*error_no!=CANNOT_SET_TOPIC){
+		printf("topic set to %s\n", topic);
+	}
 	void *ptr = NULL;
 	printf("subscribing...\n");
 	error_no=subscribe_1(ptr, cl);
-  printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
+  	printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
 	int pid = fork();
 
 	if(pid == 0){
@@ -44,14 +46,17 @@ int main(int argc, char *argv[]){
 			char *msg2 = msg;
       
 			error_no=publish_1(&msg2, cl);
-      printf("%s",PUB_SUB_RET_CODE[*error_no]);
+      			printf("%s",PUB_SUB_RET_CODE[*error_no]);
 		}
 
 		void *ptr2 = NULL;
 		printf("unsubscribing...\n");
-		kill(pid, SIGKILL);
 		error_no=unsubscribe_1(ptr2, cl);
-    printf("%s",PUB_SUB_RET_CODE[*error_no]);
+		printf("%s",PUB_SUB_RET_CODE[*error_no]);
+		kill(pid, SIGKILL);
+		
+    		printf("%s",PUB_SUB_RET_CODE[*error_no]);
 		printf("finished\nquitting...\n");
 	}
+	return 0;
 }

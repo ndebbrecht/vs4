@@ -28,7 +28,8 @@ short *unsubscribe_1_svc(void *t, struct svc_req *req){
       for(unsigned short i = 0; i < subCounter; i++){
         printf("%s\n", subscribed[i]);
       }
-      return 0;
+      errorno=OK;
+      return (&errorno);
     }
   }
   errorno = CANNOT_UNREGISTER;
@@ -57,6 +58,12 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
 
 short *set_channel_1_svc(topic *tp, struct svc_req *req){
   static short errorno=0;
+
+char *tmp = inet_ntoa(req->rq_xprt->xp_raddr.sin_addr);
+	if(strcmp("127.0.0.1",tmp)!=0){
+		errorno=CANNOT_SET_TOPIC;
+		return (&errorno);
+	}
   channel = *tp;
   strcpy(top, channel);
   printf("Channel: %s\n", top);
