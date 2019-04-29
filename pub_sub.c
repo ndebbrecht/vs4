@@ -1,4 +1,4 @@
-
+#include <time.h>
 #include <stdio.h>
 #include <rpc/rpc.h>
 #include <sys/socket.h>
@@ -7,13 +7,18 @@
 #include "return_codes.h"
 #include "pub_sub.h"
 #include "pub_sub_deliv.h"
+#include "sha_256.h"
+
 
 char subscribed[512][16];
+param param_st[16];
+unsigned short paramCounter = 0;
 unsigned short subCounter = 0;
 topic channel;
 struct scv_req;
 char top[TOPLEN];
 
+void init_hash_digest(void);
 
 short *unsubscribe_1_svc(void *t, struct svc_req *req){
   static short errorno=0;
@@ -88,3 +93,36 @@ short *publish_1_svc(message *message, struct svc_req *req){
   
   return (&errorno);
 }
+
+
+sessionid * get_session_1_svc(user * user, struct svc_req * req){
+	static sessionid session;
+ 	session = clock();
+	unsigned short counter=0;
+	param_st[paramCounter].id = session;
+	paramCounter++;	
+	init_hash_digest();
+	while((strcmp(GLOB_hash_digest[counter].user,*user) != 0) && counter < paramCounter){
+		counter++;	
+	}
+	if(counter<subCounter){
+		param_st[counter].hash = GLOB_hash_digest[counter].hash;
+	}
+	else{
+		param_st[counter].hash = "0";//Gibt es einen Hash H(user;pwd) der 0 ergibt ?
+	}
+
+	return (&session);	
+}
+
+short * validate_1_svc(param * param, struct svc_req * req){
+	
+
+}
+short * invalidate_1_svc(sessionid * id, struct svc_req * req){
+
+}
+
+
+
+

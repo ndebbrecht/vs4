@@ -20,13 +20,14 @@ union argument switch (int topic_or_message) {
   case 1: message m; /* message wird uebertragen */  
   default: void; /* kein Parameter */ 
 };
+
 struct param { 
   sessionid id; 
   argument arg; 
   hashstring hash; 
 }; 
 
-typedef struct param; 
+typedef struct param param; 
 
 /*
  * Funktionen des Pub / Sub Systems.

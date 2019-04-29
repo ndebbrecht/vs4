@@ -19,6 +19,31 @@ extern "C" {
 typedef char *topic;
 
 typedef char *message;
+#define USERLEN 12
+#define HASHLEN 96
+
+typedef char *hashstring;
+
+typedef char *user;
+
+typedef int sessionid;
+
+struct argument {
+	int topic_or_message;
+	union {
+		topic t;
+		message m;
+	} argument_u;
+};
+typedef struct argument argument;
+
+struct param {
+	sessionid id;
+	argument arg;
+	hashstring hash;
+};
+typedef struct param param;
+
 
 #define PUBSUBPROG 0x20000011
 #define PUBSUBVERS 1
@@ -36,6 +61,15 @@ extern  short * unsubscribe_1_svc(void *, struct svc_req *);
 #define publish 4
 extern  short * publish_1(message *, CLIENT *);
 extern  short * publish_1_svc(message *, struct svc_req *);
+#define get_session 5
+extern  sessionid * get_session_1(user *, CLIENT *);
+extern  sessionid * get_session_1_svc(user *, struct svc_req *);
+#define validate 6
+extern  short * validate_1(param *, CLIENT *);
+extern  short * validate_1_svc(param *, struct svc_req *);
+#define invalidate 7
+extern  short * invalidate_1(sessionid *, CLIENT *);
+extern  short * invalidate_1_svc(sessionid *, struct svc_req *);
 extern int pubsubprog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -51,6 +85,15 @@ extern  short * unsubscribe_1_svc();
 #define publish 4
 extern  short * publish_1();
 extern  short * publish_1_svc();
+#define get_session 5
+extern  sessionid * get_session_1();
+extern  sessionid * get_session_1_svc();
+#define validate 6
+extern  short * validate_1();
+extern  short * validate_1_svc();
+#define invalidate 7
+extern  short * invalidate_1();
+extern  short * invalidate_1_svc();
 extern int pubsubprog_1_freeresult ();
 #endif /* K&R C */
 
@@ -59,10 +102,22 @@ extern int pubsubprog_1_freeresult ();
 #if defined(__STDC__) || defined(__cplusplus)
 extern  bool_t xdr_topic (XDR *, topic*);
 extern  bool_t xdr_message (XDR *, message*);
+extern  bool_t xdr_hashstring (XDR *, hashstring*);
+extern  bool_t xdr_user (XDR *, user*);
+extern  bool_t xdr_sessionid (XDR *, sessionid*);
+extern  bool_t xdr_argument (XDR *, argument*);
+extern  bool_t xdr_param (XDR *, param*);
+extern  bool_t xdr_param (XDR *, param*);
 
 #else /* K&R C */
 extern bool_t xdr_topic ();
 extern bool_t xdr_message ();
+extern bool_t xdr_hashstring ();
+extern bool_t xdr_user ();
+extern bool_t xdr_sessionid ();
+extern bool_t xdr_argument ();
+extern bool_t xdr_param ();
+extern bool_t xdr_param ();
 
 #endif /* K&R C */
 
