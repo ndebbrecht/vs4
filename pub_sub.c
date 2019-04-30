@@ -119,7 +119,7 @@ short * validate_1_svc(param * param, struct svc_req * req){
   static short errorno=0;
   printf("%i\n", param->id);
   printf("%s\n", param->hash);
-  printf("%s\n", param->arg);
+  //printf("%s\n", param->arg);
 	for(unsigned short i = 0; i < 16; i++){
     if(param_st[i].id == param->id){
       if(strcmp(param->hash, param_st[i].hash)){
