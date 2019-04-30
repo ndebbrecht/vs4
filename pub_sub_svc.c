@@ -22,6 +22,9 @@ pubsubprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	union {
 		topic set_channel_1_arg;
 		message publish_1_arg;
+		user get_session_1_arg;
+		param validate_1_arg;
+		sessionid invalidate_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -54,6 +57,24 @@ pubsubprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		_xdr_argument = (xdrproc_t) xdr_message;
 		_xdr_result = (xdrproc_t) xdr_short;
 		local = (char *(*)(char *, struct svc_req *)) publish_1_svc;
+		break;
+
+	case get_session:
+		_xdr_argument = (xdrproc_t) xdr_user;
+		_xdr_result = (xdrproc_t) xdr_sessionid;
+		local = (char *(*)(char *, struct svc_req *)) get_session_1_svc;
+		break;
+
+	case validate:
+		_xdr_argument = (xdrproc_t) xdr_param;
+		_xdr_result = (xdrproc_t) xdr_short;
+		local = (char *(*)(char *, struct svc_req *)) validate_1_svc;
+		break;
+
+	case invalidate:
+		_xdr_argument = (xdrproc_t) xdr_sessionid;
+		_xdr_result = (xdrproc_t) xdr_short;
+		local = (char *(*)(char *, struct svc_req *)) invalidate_1_svc;
 		break;
 
 	default:
