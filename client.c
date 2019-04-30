@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
 	printf("%s\n", user);
 	sessionid* sessionid = get_session_1(&user, cl);
 	param myParam;
-	printf("%i\n",sessionid);
+	printf("%i\n",*sessionid);
 	myParam.id = *sessionid;
 	char *hashtext = hash_user_pwd(username, "123");
 	printf("%s\n", hashtext);
