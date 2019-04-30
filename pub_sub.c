@@ -57,7 +57,7 @@ short *subscribe_1_svc(void *t, struct svc_req *req){
   strcpy(subscribed[subCounter], address);
   subCounter++;
   printf("Subscriber-List:\n");
-  
+
   return (&errorno);
 }
 
@@ -90,7 +90,7 @@ short *publish_1_svc(message *message, struct svc_req *req){
     deliver_1(&m, cl);
   }
   printf("sending completed.\n");
-  
+
   return (&errorno);
 }
 
@@ -100,10 +100,10 @@ sessionid * get_session_1_svc(user * user, struct svc_req * req){
  	session = clock();
 	unsigned short counter=0;
 	param_st[paramCounter].id = session;
-	paramCounter++;	
+	paramCounter++;
 	init_hash_digest();
 	while((strcmp(GLOB_hash_digest[counter].user,*user) != 0) && counter < paramCounter){
-		counter++;	
+		counter++;
 	}
 	if(counter<subCounter){
 		param_st[counter].hash = GLOB_hash_digest[counter].hash;
@@ -112,17 +112,23 @@ sessionid * get_session_1_svc(user * user, struct svc_req * req){
 		param_st[counter].hash = "0";//Gibt es einen Hash H(user;pwd) der 0 ergibt ?
 	}
 
-	return (&session);	
+	return (&session);
 }
 
 short * validate_1_svc(param * param, struct svc_req * req){
-	
+  static short errorno=0;
+	for(unsigned short i = 0; i < 16; i++){
+    if(param_st[i].id == param->id){
+      if(strcmp(param->hash, param_st[i].hash)){
+        errorno=OK;
+        return (&errorno);
+      }
+    }
+    errorno=VALIDATE_ERROR;
+    return (&errorno);
+  }
 
 }
 short * invalidate_1_svc(sessionid * id, struct svc_req * req){
 
 }
-
-
-
-
