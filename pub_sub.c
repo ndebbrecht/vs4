@@ -135,10 +135,10 @@ short * validate_1_svc(param * param, struct svc_req * req){
 
 }
 short * invalidate_1_svc(sessionid * id, struct svc_req * req){
-  static short* errorno;
-  for(unsigned short i = 0; i < paramCounter, i++){
-    if(param_st[i].id == id){
-      param_st[i] == param_st[paramCounter];
+  static short errorno;
+  for(unsigned short i = 0; i < paramCounter; i++){
+    if(param_st[i].id == *id){
+      param_st[i] = param_st[paramCounter];
       paramCounter--;
       errorno = OK;
       return (&errorno);
