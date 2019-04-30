@@ -49,9 +49,6 @@ int main(int argc, char *argv[]){
 	char *hashtext = hash_user_pwd(username, "123");
 	printf("%s\n", hashtext);
 	myParam.hash = hashtext;
-	char arg_str[1] = "\0";
-	argument arg = arg_str;
-	myParam.arg = arg; 
 	error_no = validate_1(&myParam, cl);
 	printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
 
