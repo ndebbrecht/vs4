@@ -41,10 +41,13 @@ int main(int argc, char *argv[]){
 	user user = username;
 	fgets(user,USERLEN,stdin);
 	user[strlen(user)-1]='\0';
+	printf("%s\n", user);
 	sessionid* sessionid = get_session_1(&user, cl);
 	param myParam;
+	printf("%i\n",sessionid);
 	myParam.id = *sessionid;
 	char *hashtext = hash_user_pwd(username, "123");
+	printf("%s\n", hashtext);
 	myParam.hash = hashtext;
 	error_no = validate_1(&myParam, cl);
 	printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
