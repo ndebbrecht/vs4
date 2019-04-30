@@ -106,7 +106,9 @@ int main(int argc, char *argv[]){
 
 				break;
 			case 5:
-				//invalidate
+				error_no = invalidate_1(myParam.id, cl);
+				printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
+				exit();
 
 				break;
 			default:printf("unknown imput - please enter a number from 1 to 5 \n");
