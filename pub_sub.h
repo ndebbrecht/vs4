@@ -50,8 +50,8 @@ typedef struct param param;
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define set_channel 1
-extern  short * set_channel_1(topic *, CLIENT *);
-extern  short * set_channel_1_svc(topic *, struct svc_req *);
+extern  short * set_channel_1(param *, CLIENT *);
+extern  short * set_channel_1_svc(param *, struct svc_req *);
 #define subscribe 2
 extern  short * subscribe_1(void *, CLIENT *);
 extern  short * subscribe_1_svc(void *, struct svc_req *);
@@ -59,8 +59,8 @@ extern  short * subscribe_1_svc(void *, struct svc_req *);
 extern  short * unsubscribe_1(void *, CLIENT *);
 extern  short * unsubscribe_1_svc(void *, struct svc_req *);
 #define publish 4
-extern  short * publish_1(message *, CLIENT *);
-extern  short * publish_1_svc(message *, struct svc_req *);
+extern  short * publish_1(param *, CLIENT *);
+extern  short * publish_1_svc(param *, struct svc_req *);
 #define get_session 5
 extern  sessionid * get_session_1(user *, CLIENT *);
 extern  sessionid * get_session_1_svc(user *, struct svc_req *);

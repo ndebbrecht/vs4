@@ -16,6 +16,7 @@ int main(int argc, char *argv[]){
 	char msg[MESLEN];
 	char *msg2 = msg;
 	char input_c[3];
+  char user_pwd_hash[HASHLEN];
 
 	int input_i=0;
 	char *ptr;
@@ -55,18 +56,20 @@ int main(int argc, char *argv[]){
 	printf("%i\n",*sessionid);
 	myParam.id = *sessionid;
 	char *hashtext = hash_user_pwd(username,ppwd);
-
+  strcpy(user_pwd_hash,hashtext);
+  printf("user_pwd_hash%s\n",user_pwd_hash);
+  printf("hashtext%s\n",hash_user_pwd(username,ppwd));
   char tmp[HASHLEN];
   char * ptmp;
   sprintf(tmp,"%d",*sessionid);
-  //strcat(tmp, sessionid);
   strcat(tmp, ";;");
   strcat(tmp,hashtext);
+  printf("\n\nstring hashed %s\n",tmp);
   
   ptmp=hash_sha(tmp);//Äußere hash funktion
   hashtext=ptmp;
-	printf("%s\n", hashtext);
-	myParam.hash = hashtext;
+	printf("hash client validate %s\n", ptmp);
+	myParam.hash = ptmp;
 	error_no = validate_1(&myParam, cl);
 	printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
   if(*error_no!=OK){
@@ -88,9 +91,19 @@ int main(int argc, char *argv[]){
 				//fflush(stdin);
 				fgets(T,TOPLEN,stdin);
 				T[strlen(T)-1]='\0';
-				error_no=set_channel_1(&T, cl);
+        myParam.arg.topic_or_message=0;//0=topic 
+        myParam.arg.argument_u.t=T;
+        memset(tmp,'\0',HASHLEN);
+        sprintf(tmp,"%d",*sessionid);
+        strcat(tmp, ";");
+        strcat(tmp,T);
+        strcat(tmp, ";");
+        strcat(tmp,user_pwd_hash);
+        ptmp=hash_sha(tmp);
+        myParam.hash=ptmp;
+				error_no=set_channel_1(&myParam, cl);
 				printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
-				if(*error_no!=CANNOT_SET_TOPIC){
+				if(*error_no==OK){
 					printf("topic set to %s\n", T);
 				}
 				break;
@@ -117,11 +130,26 @@ int main(int argc, char *argv[]){
 				break;
 			case 4:
 				printf("Enter a message:\n");
-
+        //read message from console
 				fgets(msg, MESLEN, stdin);
 				msg[strlen(msg)-1]='\0';
-
-				error_no=publish_1(&msg2, cl);
+        //prepar myParam for publish_1
+        myParam.arg.topic_or_message=1;//1=message 
+        myParam.arg.argument_u.t=msg;
+        //create string given to hash_sha
+        memset(tmp,'\0',HASHLEN);
+        sprintf(tmp,"%d",*sessionid);
+        strcat(tmp, ";");
+        strcat(tmp,msg);
+        strcat(tmp, ";");
+        //strcpy(user_pwd_hash,"256e8a0f3e81b9bd391dad7c9bc9fda6bc73ffd54d72a77f106f2112180689e3");
+        strcat(tmp,user_pwd_hash);
+        printf("message die gehashed wird: %s\n",tmp);
+        //hash message
+        ptmp=hash_sha(tmp);
+        myParam.hash=ptmp;
+        printf("publish hash%s\n",myParam.hash);
+				error_no=publish_1(&myParam, cl);
 				printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
 
 				break;

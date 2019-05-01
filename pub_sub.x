@@ -34,10 +34,10 @@ typedef struct param param;
  */
 program PUBSUBPROG {
   version PUBSUBVERS {
-    short set_channel (topic) = 1;  /* Setzen des Channel Topics     */
+    short set_channel (param) = 1;  /* Setzen des Channel Topics     */
     short subscribe () = 2;         /* Receiver registrieren         */
     short unsubscribe () = 3;       /* Receiver deregistrieren       */
-    short publish (message) = 4;    /* Nachricht an Channel schicken */
+    short publish (param) = 4;    /* Nachricht an Channel schicken */
     sessionid get_session (user) = 5; 
     short validate (param) = 6; 
     short invalidate (sessionid) = 7; 

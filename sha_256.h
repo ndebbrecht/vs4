@@ -19,6 +19,11 @@ typedef struct {
     char* hash;
 } hash_entry;
 
+typedef struct s_h{
+    int id;
+    char* hash;
+} session_hash;
+
 static int GLOB_max_idx = -1;
 hash_entry GLOB_hash_digest [MAX_HASH_DIGEST_LENGTH];
 
@@ -45,4 +50,4 @@ char* hash_sha(char* str);
  * werden.
  */
 char* hash_user_pwd(char* user, char* pwd);
-
+char* get_hash_from_session(int session,session_hash * session_hash,int size);

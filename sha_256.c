@@ -83,6 +83,16 @@ char* hash_user_pwd(char* user, char* pwd) {
     sprintf(str, "%s;%s", user, pwd);
     return hash_sha(str);
 }
+char* get_hash_from_session(int session,session_hash * session_hash,int size){
+  char hash[HASHLEN];
+  for(int i=0;i<size&&session_hash[i].id!=0;i++){
+    if(session_hash[i].id==session){
+      return session_hash[i].hash;
+    }
+  }
+  return NULL;
+
+}
 
 /*
  * Main Funktion: Einlesen von Hash-Digest, 
