@@ -125,10 +125,11 @@ sessionid * get_session_1_svc(user * user, struct svc_req * req){
 
 short * validate_1_svc(param * param, struct svc_req * req){
   static short errorno=0;
-  //char tmp[HASHLEN];
-  //strcat(tmp, param->id);
-  //strcat(tmp, ";;");
-  //strcat(tmp, param_st[i].hash);
+  char tmp[HASHLEN];
+  char * ptmp;
+  //strcat(tmp, itoa(param.id));
+  sprintf(tmp,"%d",param->id);
+  strcat(tmp, ";;");
   printf("param id%i\n", param->id);
   fflush(stdout);
   printf("hash num param%s\n", param->hash);
@@ -138,13 +139,15 @@ short * validate_1_svc(param * param, struct svc_req * req){
     printf("param_st %s\n", param_st[i].hash);
    	fflush(stdout);
     if(param_st[i].id == param->id){
-      printf("%i\n", param_st[i].id);
-      printf("%s\n", param_st[i].hash);
+      //printf("%i\n", param_st[i].id);
+      //printf("%s\n", param_st[i].hash);
+      strcat(tmp, param_st[i].hash);
+      ptmp=hash_sha(tmp);
       if(param_st[i].hash==NULL){
         errorno=VALIDATE_ERROR;//
         return (&errorno);
       }
-      else if(strcmp(param->hash, param_st[i].hash)){
+      else if(strcmp(param->hash, ptmp)){
         errorno=OK;
         return (&errorno);
       }

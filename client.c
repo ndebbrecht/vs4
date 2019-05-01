@@ -44,11 +44,27 @@ int main(int argc, char *argv[]){
 	printf("%s\n", user);
  
 	sessionid* sessionid = get_session_1(&user, cl);
- 
+  printf("Passwort:\n");
+	//fflush(stdin);
+  char pwd[PWDLEN];
+	char* ppwd = pwd;
+	fgets(ppwd,PWDLEN,stdin);
+	ppwd[strlen(ppwd)-1]='\0';
+	printf("%s\n", ppwd);
 	param myParam;
 	printf("%i\n",*sessionid);
 	myParam.id = *sessionid;
-	char *hashtext = hash_user_pwd(username, "123");
+	char *hashtext = hash_user_pwd(username,ppwd);
+
+  char tmp[HASHLEN];
+  char * ptmp;
+  sprintf(tmp,"%d",*sessionid);
+  //strcat(tmp, sessionid);
+  strcat(tmp, ";;");
+  strcat(tmp,hashtext);
+  
+  ptmp=hash_sha(tmp);//Äußere hash funktion
+  hashtext=ptmp;
 	printf("%s\n", hashtext);
 	myParam.hash = hashtext;
 	error_no = validate_1(&myParam, cl);
