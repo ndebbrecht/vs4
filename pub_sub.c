@@ -102,48 +102,76 @@ sessionid * get_session_1_svc(user * user, struct svc_req * req){
 	param_st[paramCounter].id = session;
 	paramCounter++;
 	init_hash_digest();
-	while((strcmp(GLOB_hash_digest[counter].user,*user) != 0) && counter < paramCounter){
-		counter++;
-	}
-	if(counter<subCounter){
-		param_st[counter].hash = GLOB_hash_digest[counter].hash;
-	}
-	else{
-		param_st[counter].hash = "0";//Gibt es einen Hash H(user;pwd) der 0 ergibt ?
-	}
+	while(counter < MAX_HASH_DIGEST_LENGTH){
+
+   printf("strcmp(%s,%s)\n",GLOB_hash_digest[counter].user,*user);
+   fflush(stdout);
+	  if(strcmp(GLOB_hash_digest[counter].user,*user) == 0){
+      printf("GLOB_hash copied into param_st.hash%s\n",GLOB_hash_digest[counter].hash);
+      fflush(stdout);
+		  param_st[paramCounter-1].hash = GLOB_hash_digest[counter].hash;
+      return (&session);
+	  }
+   	counter++; 
+  }
+	
+	//else
+	param_st[counter].hash = NULL;
+  printf("get session%s\n", param_st[paramCounter-1].hash);
+ 	fflush(stdout);
 
 	return (&session);
 }
 
 short * validate_1_svc(param * param, struct svc_req * req){
   static short errorno=0;
-  printf("%i\n", param->id);
-  printf("%s\n", param->hash);
-	for(unsigned short i = 0; i < paramCounter; i++){
+  //char tmp[HASHLEN];
+  //strcat(tmp, param->id);
+  //strcat(tmp, ";;");
+  //strcat(tmp, param_st[i].hash);
+  printf("param id%i\n", param->id);
+  fflush(stdout);
+  printf("hash num param%s\n", param->hash);
+	fflush(stdout);
+  for(unsigned short i = 0; i < paramCounter; i++){
     printf("%i\n", i);
-    printf("%s\n", param_st[i].hash);
+    printf("param_st %s\n", param_st[i].hash);
+   	fflush(stdout);
     if(param_st[i].id == param->id){
       printf("%i\n", param_st[i].id);
-      if(strcmp(param->hash, param_st[i].hash)){
+      printf("%s\n", param_st[i].hash);
+      if(param_st[i].hash==NULL){
+        errorno=VALIDATE_ERROR;//
+        return (&errorno);
+      }
+      else if(strcmp(param->hash, param_st[i].hash)){
         errorno=OK;
         return (&errorno);
       }
+      else{
+        errorno=VALIDATE_ERROR;//wrong hash
+        return (&errorno);
+      }
     }
-    errorno=VALIDATE_ERROR;
-    return (&errorno);
+    
   }
-
+  errorno=VALIDATE_ERROR;//id not found
+  return (&errorno);
 }
 short * invalidate_1_svc(sessionid * id, struct svc_req * req){
   static short errorno;
   for(unsigned short i = 0; i < paramCounter; i++){
+  printf("invalidateparam id:%i\n", param_st->id);
+  fflush(stdout);
     if(param_st[i].id == *id){
-      param_st[i] = param_st[paramCounter];
+      //param_st[i] = param_st[paramCounter];
+      param_st[i].id = param_st[paramCounter].id;
+      param_st[i].hash = param_st[paramCounter].hash;
       paramCounter--;
       errorno = OK;
       return (&errorno);
     }
   }
-  errorno = INVALIDATE_ERROR;
+  errorno = INVALIDATE_ERROR;//cannot find id in the list
   return (&errorno);
 }

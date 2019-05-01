@@ -42,7 +42,9 @@ int main(int argc, char *argv[]){
 	fgets(user,USERLEN,stdin);
 	user[strlen(user)-1]='\0';
 	printf("%s\n", user);
+ 
 	sessionid* sessionid = get_session_1(&user, cl);
+ 
 	param myParam;
 	printf("%i\n",*sessionid);
 	myParam.id = *sessionid;
@@ -51,7 +53,9 @@ int main(int argc, char *argv[]){
 	myParam.hash = hashtext;
 	error_no = validate_1(&myParam, cl);
 	printf("%s\n",PUB_SUB_RET_CODE[*error_no]);
-
+  if(*error_no!=OK){
+    return 0;
+  }
 	while(input_i!=5){
 		printf("Press 1 to set a Topic\n"
 		"Press 2 to subscribe to a server\n"
