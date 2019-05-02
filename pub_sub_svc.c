@@ -20,8 +20,8 @@ static void
 pubsubprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		topic set_channel_1_arg;
-		message publish_1_arg;
+		param set_channel_1_arg;
+		param publish_1_arg;
 		user get_session_1_arg;
 		param validate_1_arg;
 		sessionid invalidate_1_arg;
@@ -36,7 +36,7 @@ pubsubprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		return;
 
 	case set_channel:
-		_xdr_argument = (xdrproc_t) xdr_topic;
+		_xdr_argument = (xdrproc_t) xdr_param;
 		_xdr_result = (xdrproc_t) xdr_short;
 		local = (char *(*)(char *, struct svc_req *)) set_channel_1_svc;
 		break;
@@ -54,7 +54,7 @@ pubsubprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		break;
 
 	case publish:
-		_xdr_argument = (xdrproc_t) xdr_message;
+		_xdr_argument = (xdrproc_t) xdr_param;
 		_xdr_result = (xdrproc_t) xdr_short;
 		local = (char *(*)(char *, struct svc_req *)) publish_1_svc;
 		break;

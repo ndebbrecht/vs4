@@ -232,8 +232,8 @@ short * invalidate_1_svc(sessionid * id, struct svc_req * req){
   fflush(stdout);
     if(param_st[i].id == *id){
       //param_st[i] = param_st[paramCounter];
-      param_st[i].id = param_st[paramCounter].id;
-      param_st[i].hash = param_st[paramCounter].hash;
+      param_st[i].id = param_st[paramCounter-1].id;
+      param_st[i].hash = param_st[paramCounter-1].hash;
       paramCounter--;
       errorno = OK;
       return (&errorno);
